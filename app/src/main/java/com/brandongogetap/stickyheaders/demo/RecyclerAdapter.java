@@ -1,11 +1,12 @@
 package com.brandongogetap.stickyheaders.demo;
 
 import android.graphics.Color;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.brandongogetap.stickyheaders.exposed.StickyHeader;
 import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler;
@@ -13,11 +14,10 @@ import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 import static android.view.LayoutInflater.from;
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
-final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BaseViewHolder>
-        implements StickyHeaderHandler {
+final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BaseViewHolder> implements StickyHeaderHandler {
 
     private final List<Item> data = new ArrayList<>();
 
@@ -52,7 +52,8 @@ final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BaseVie
         return viewHolder;
     }
 
-    @Override public void onBindViewHolder(BaseViewHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         Item item = data.get(position);
         holder.titleTextView.setText(item.title);
         holder.messageTextView.setText(item.message);
@@ -68,18 +69,21 @@ final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BaseVie
         }
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return data.size();
     }
 
-    @Override public int getItemViewType(int position) {
+    @Override
+    public int getItemViewType(int position) {
         if (position != 0 && position % 16 == 0) {
             return 1;
         }
         return 0;
     }
 
-    @Override public List<?> getAdapterData() {
+    @Override
+    public List<?> getAdapterData() {
         return data;
     }
 
@@ -104,8 +108,8 @@ final class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BaseVie
 
         BaseViewHolder(View itemView) {
             super(itemView);
-            titleTextView = (TextView) itemView.findViewById(R.id.tv_title);
-            messageTextView = (TextView) itemView.findViewById(R.id.tv_message);
+            titleTextView = itemView.findViewById(R.id.tv_title);
+            messageTextView = itemView.findViewById(R.id.tv_message);
         }
     }
 }

@@ -28,6 +28,9 @@ dependencies {
     implementation project(':stickyheaders')
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "com.google.android.material:material:1.2.0-alpha04"
 
     testImplementation "junit:junit:$junitVersion"
 

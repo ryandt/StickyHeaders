@@ -1,55 +1,41 @@
 package com.brandongogetap.stickyheaders.demo;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.brandongogetap.stickyheaders.StickyLayoutManager;
-import com.brandongogetap.stickyheaders.exposed.StickyHeaderListener;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-
-    private RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewPager2 viewPager = findViewById(R.id.view_pager);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        TabbedFragmentStateAdapter tabAdapter = new TabbedFragmentStateAdapter(this);
 
-        recyclerView = findViewById(R.id.recycler_view);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        viewPager.setOffscreenPageLimit(2);
 
-        adapter = new RecyclerAdapter();
-        adapter.setData(ItemGenerator.demoList());
-        StickyLayoutManager layoutManager = new TopSnappedStickyLayoutManager(this, adapter);
-        layoutManager.elevateHeaders(true); // Default elevation of 5dp
-        // You can also specify a specific dp for elevation
-//        layoutManager.elevateHeaders(10);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        layoutManager.setStickyHeaderListener(new StickyHeaderListener() {
-            @Override
-            public void headerAttached(View headerView, int adapterPosition) {
-                Log.d("Listener", "Attached with position: " + adapterPosition);
-            }
+        List<String> titles = new ArrayList<>();
+        titles.add("Tue 21");
+        titles.add("Mon 20");
+        titles.add("Wed 22");
+        titles.add("Thu 23");
+        titles.add("Fri 24");
+        tabAdapter.submitList(titles);
+        viewPager.setAdapter(tabAdapter);
 
-            @Override
-            public void headerDetached(View headerView, int adapterPosition) {
-                Log.d("Listener", "Detached with position: " + adapterPosition);
-            }
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            tab.setText(tabAdapter.tabTitles.get(position));
         });
-        findViewById(R.id.visibility_button).setOnClickListener(v ->
-                recyclerView.setVisibility(recyclerView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE));
-    }
-
-    void setItems(List<Item> items) {
-        if (adapter != null) {
-            adapter.setData(items);
-        }
+        tabLayoutMediator.attach();
     }
 }
